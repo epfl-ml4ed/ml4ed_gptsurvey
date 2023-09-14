@@ -1,47 +1,143 @@
 <script>
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  import "carbon-components-svelte/css/white.css";
+  import { _ } from "svelte-i18n";
+  import { fly } from "svelte/transition";
+  import { Button } from "carbon-components-svelte";
+  import ChevronRight from "carbon-icons-svelte/lib/ChevronRight.svelte";
+  import PageWelcome from "./PageWelcome.svelte";
+  import PageConsent from "./PageConsent.svelte";
+
+  // Initialize internationalization
+  import "./i18n.js";
+
+  // STATES
+
+  // Current Page
+  let main_state = "PageConsent";
+  // Progress var value (in %)
+  let progress = 0;
+  // Bottom bar states
+  let bottom_bar_next_enabled = true;
+
+  // DERIVED STATES
+
+  $: bottom_bar_message = bottom_bar_next_enabled
+    ? $_("common_pressnext")
+    : $_("common_fillall");
+
+  // FUNCTIONS
+
+  function next_func() {
+    main_state = "PageConsent";
+  }
 </script>
 
 <main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+  <div id="main_container">
+    {#key main_state}
+      <div
+        id="page_container"
+        in:fly={{ x: 400, y: 0, duration: 600 }}
+        out:fly={{ x: -600, y: 0, duration: 400 }}
+      >
+        {#if main_state == "PageWelcome"}
+          <PageWelcome />
+        {:else if main_state == "PageConsent"}
+          <PageConsent bind:bottom_bar_next_enabled />
+        {:else}
+          Error : unkown main_state
+        {/if}
+      </div>
+    {/key}
+    <div style="width: {progress}%;" id="progress_bar" />
+
+    <div id="bottom_bar">
+      <p
+        style="color: {bottom_bar_next_enabled ? 'black' : '#a60606'}"
+        id="next_text"
+      >
+        {bottom_bar_message}
+      </p>
+      <Button
+        disabled={!bottom_bar_next_enabled}
+        icon={ChevronRight}
+        on:click={next_func}>{$_("common_next")}</Button
+      >
+    </div>
   </div>
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+  #main_container {
+    background-color: white;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    overflow: hidden;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+
+  #page_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;
+    padding: 16px;
+    padding-bottom: 66px;
   }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
+
+  @media (min-width: 780px) {
+    #main_container {
+      width: 720px;
+      margin-top: 32px;
+      margin-bottom: 32px;
+      border-radius: 8px;
+      border: solid 1px #e6e6e6;
+    }
+    #page_container {
+      padding: 64px;
+    }
   }
-  .read-the-docs {
-    color: #888;
+
+  #progress_bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: red;
+    transition: all 1s;
+  }
+
+  #bottom_bar {
+    z-index: 4;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #efefef73;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    flex-wrap: nowrap;
+    border-top: solid 1px #e6e6e6;
+    backdrop-filter: blur(8px);
+  }
+
+  #next_text {
+    width: 100%;
+    margin-left: 16px;
+    margin-right: 16px;
+    opacity: 50%;
+    text-align: center;
   }
 </style>
