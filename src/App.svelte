@@ -10,20 +10,26 @@
   // Initialize internationalization
   import "./i18n.js";
 
+  // CONSTANTS
+  let progress_values = { PageWelcome: 0, PageConsent: 25 };
+
   // STATES
 
   // Current Page
-  let main_state = "PageConsent";
-  // Progress var value (in %)
-  let progress = 0;
+  let main_state = "PageWelcome";
   // Bottom bar states
   let bottom_bar_next_enabled = true;
+  // Student sciper
+  let sciper = undefined;
 
   // DERIVED STATES
 
   $: bottom_bar_message = bottom_bar_next_enabled
     ? $_("common_pressnext")
     : $_("common_fillall");
+
+  // Progress var value (in %)
+  $: progress = progress_values[main_state];
 
   // FUNCTIONS
 
@@ -43,13 +49,12 @@
         {#if main_state == "PageWelcome"}
           <PageWelcome />
         {:else if main_state == "PageConsent"}
-          <PageConsent bind:bottom_bar_next_enabled />
+          <PageConsent bind:bottom_bar_next_enabled bind:sciper />
         {:else}
           Error : unkown main_state
         {/if}
       </div>
     {/key}
-    <div style="width: {progress}%;" id="progress_bar" />
 
     <div id="bottom_bar">
       <p
@@ -64,6 +69,8 @@
         on:click={next_func}>{$_("common_next")}</Button
       >
     </div>
+
+    <div style="width: {progress}%;" id="progress_bar" />
   </div>
 </main>
 
@@ -94,9 +101,9 @@
     padding-bottom: 66px;
   }
 
-  @media (min-width: 780px) {
+  @media (min-width: 1024px) {
     #main_container {
-      width: 720px;
+      width: 1024px;
       margin-top: 32px;
       margin-bottom: 32px;
       border-radius: 8px;
@@ -113,12 +120,11 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: red;
+    background-color: #0f62fe;
     transition: all 1s;
   }
 
   #bottom_bar {
-    z-index: 4;
     position: absolute;
     bottom: 0;
     left: 0;

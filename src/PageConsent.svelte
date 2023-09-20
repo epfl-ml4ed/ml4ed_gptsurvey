@@ -3,13 +3,11 @@
     import { Checkbox } from "carbon-components-svelte";
     import { NumberInput } from "carbon-components-svelte";
 
-    import { ContentSwitcher, Switch } from "carbon-components-svelte";
-
     export let bottom_bar_next_enabled;
+    export let sciper;
 
     let agree = false;
     let over18 = false;
-    let sciper = undefined;
     let sciper_range_invalid = true;
     $: sciper_range_invalid = !sciper || sciper < 100000 || sciper > 999999;
     $: bottom_bar_next_enabled = agree && over18 && !sciper_range_invalid;
@@ -43,20 +41,11 @@
     bind:invalid={sciper_range_invalid}
     invalidText={$_("pageconsent_sciper_invalid")}
 />
-<br />
-<br />
-<ContentSwitcher style="height:60px" selectedIndex={2}>
-    <Switch style="white-space: normal" text={$_("common_stronglydisagree")} />
-    <Switch style="white-space: normal" text={$_("common_disagree")} />
-    <Switch style="white-space: normal" text={$_("common_neutral")} />
-    <Switch style="white-space: normal" text={$_("common_agree")} />
-    <Switch style="white-space: normal" text={$_("common_stronglyagree")} />
-</ContentSwitcher>
 
 <style>
     #title {
-        margin-top: 8px;
-        margin-bottom: 8px;
+        margin-top: 0px;
+        margin-bottom: 32px;
         text-align: center;
     }
 
