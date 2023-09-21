@@ -4,13 +4,14 @@
     import { NumberInput } from "carbon-components-svelte";
 
     export let bottom_bar_next_enabled;
-    export let sciper;
+    export let sciperID;
 
     let agree = false;
     let over18 = false;
-    let sciper_range_invalid = true;
-    $: sciper_range_invalid = !sciper || sciper < 100000 || sciper > 999999;
-    $: bottom_bar_next_enabled = agree && over18 && !sciper_range_invalid;
+    let sciperID_range_invalid = true;
+    $: sciperID_range_invalid =
+        !sciperID || sciperID < 100000 || sciperID > 999999;
+    $: bottom_bar_next_enabled = agree && over18 && !sciperID_range_invalid;
 </script>
 
 <h1 id="title">{$_("pageconsent_title")}</h1>
@@ -37,8 +38,8 @@
 <NumberInput
     hideSteppers
     label="SCIPER"
-    bind:value={sciper}
-    bind:invalid={sciper_range_invalid}
+    bind:value={sciperID}
+    bind:invalid={sciperID_range_invalid}
     invalidText={$_("pageconsent_sciper_invalid")}
 />
 

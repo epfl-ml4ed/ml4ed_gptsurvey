@@ -6,6 +6,7 @@
   import ChevronRight from "carbon-icons-svelte/lib/ChevronRight.svelte";
   import PageWelcome from "./PageWelcome.svelte";
   import PageConsent from "./PageConsent.svelte";
+  import PageQ1 from "./PageQ1.svelte";
 
   // Initialize internationalization
   import "./i18n.js";
@@ -20,7 +21,7 @@
   // Bottom bar states
   let bottom_bar_next_enabled = true;
   // Student sciper
-  let sciper = undefined;
+  let sciperID = undefined;
 
   // DERIVED STATES
 
@@ -34,7 +35,11 @@
   // FUNCTIONS
 
   function next_func() {
-    main_state = "PageConsent";
+    if (main_state == "PageWelcome") {
+      main_state = "PageConsent";
+    } else if (main_state == "PageConsent") {
+      main_state = "PageQ1";
+    }
   }
 </script>
 
@@ -49,7 +54,9 @@
         {#if main_state == "PageWelcome"}
           <PageWelcome />
         {:else if main_state == "PageConsent"}
-          <PageConsent bind:bottom_bar_next_enabled bind:sciper />
+          <PageConsent bind:bottom_bar_next_enabled bind:sciperID />
+        {:else if main_state == "PageQ1"}
+          <PageQ1 bind:bottom_bar_next_enabled bind:sciperID />
         {:else}
           Error : unkown main_state
         {/if}
