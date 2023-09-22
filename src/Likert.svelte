@@ -13,9 +13,12 @@
     ];
     export let completed;
 
-    export let answers = new Array(questions_labels.length)
-        .fill(null)
-        .map(() => Array(answers_labels.length).fill(false));
+    export let answers;
+    if (answers === undefined) {
+        answers = new Array(questions_labels.length)
+            .fill(null)
+            .map(() => Array(answers_labels.length).fill(false));
+    }
 
     function select_answer(i, j) {
         // Ensure only one answer per row

@@ -8,6 +8,7 @@
   import PageConsent from "./PageConsent.svelte";
   import PageQ1 from "./PageQ1.svelte";
   import PageQ2 from "./PageQ2.svelte";
+  import PageQ3 from "./PageQ3.svelte";
 
   // Initialize internationalization
   import "./i18n.js";
@@ -15,15 +16,16 @@
   // CONSTANTS
   let progress_values = {
     PageWelcome: 0,
-    PageConsent: 25,
-    PageQ1: 50,
-    PageQ2: 75,
+    PageConsent: 20,
+    PageQ1: 40,
+    PageQ2: 60,
+    PageQ3: 80,
   };
 
   // STATES
 
   // Current Page
-  let main_state = "PageWelcome";
+  let main_state = "PageQ1";
   // Bottom bar states
   let bottom_bar_next_enabled = true;
   // Student sciper ID (given by user)
@@ -45,6 +47,13 @@
   // Student answers on page Q2 (given by user)
   let Q2_selected_feedback = undefined;
   let Q2_explain_txt = undefined;
+  // Student likert answers on page Q3 (given by user)
+  // Initially same as Q1, then overwritten on page Q3
+  $: Q3_likert_AI = Q1_likert_AI;
+  $: Q3_likert_human = Q1_likert_human;
+  // Student extra likert answers on page Q3 (given by user)
+  let Q3_extra_likert_AI = undefined;
+  let Q3_extra_likert_human = undefined;
 
   // DERIVED STATES
 
@@ -65,6 +74,8 @@
       main_state = "PageQ1";
     } else if (main_state == "PageQ1") {
       main_state = "PageQ2";
+    } else if (main_state == "PageQ2") {
+      main_state = "PageQ3";
     }
   }
 
@@ -136,6 +147,17 @@
             {sciperID}
             bind:selected_feedback={Q2_selected_feedback}
             bind:explain_txt={Q2_explain_txt}
+          />
+        {:else if main_state == "PageQ3"}
+          <PageQ3
+            bind:bottom_bar_next_enabled
+            {sciperID}
+            {feedback_AI_body}
+            {feedback_human_body}
+            bind:likert_AI={Q3_likert_AI}
+            bind:likert_human={Q3_likert_human}
+            bind:extra_likert_AI={Q3_extra_likert_AI}
+            bind:extra_likert_human={Q3_extra_likert_human}
           />
         {:else}
           Error : unkown main_state
