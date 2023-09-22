@@ -24,5 +24,14 @@
     "pageq1_txt2": "Your answer was",
     "pageq1_txt3": "Please take a moment to read those two feedback variants below",
     "pageq1_fb_1": "To what extent do you associate Feedback 1 above with the following terms?",
-    "pageq1_fb_2": "To what extent do you associate Feedback 2 above with the following terms?"
+    "pageq1_fb_2": "To what extent do you associate Feedback 2 above with the following terms?",
+    "pageq2_title": "The big reveal",
+    "pageq2_txt1": "Now here is some additional information :",
+    "pageq2_txt2": "One of our two feedbacks was written by the teaching team, and ChatGPT wrote one !",
+    "pageq2_txt3": "Knowing this information, which feedback do you think is written by ChatGPT ?",
+    "pageq2_a1": "ChatGPT wrote feedback 1",
+    "pageq2_a2": "ChatGPT wrote feedback 2",
+    "pageq2_txt4": "Why do you think so ?",
+    "pageq2_txt5": "Write your explaination here...",
+    "pageq2_invalid": "Please write an explaination for your answer."
 }

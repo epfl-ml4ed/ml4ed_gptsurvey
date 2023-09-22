@@ -7,12 +7,18 @@
   import PageWelcome from "./PageWelcome.svelte";
   import PageConsent from "./PageConsent.svelte";
   import PageQ1 from "./PageQ1.svelte";
+  import PageQ2 from "./PageQ2.svelte";
 
   // Initialize internationalization
   import "./i18n.js";
 
   // CONSTANTS
-  let progress_values = { PageWelcome: 0, PageConsent: 25, PageQ1: 50 };
+  let progress_values = {
+    PageWelcome: 0,
+    PageConsent: 25,
+    PageQ1: 50,
+    PageQ2: 75,
+  };
 
   // STATES
 
@@ -33,6 +39,12 @@
   // Feedbacks (gathered from server)
   let feedback_AI_body = undefined;
   let feedback_human_body = undefined;
+  // Student likert answers on page Q1 (given by user)
+  let Q1_likert_AI = undefined;
+  let Q1_likert_human = undefined;
+  // Student answers on page Q2 (given by user)
+  let Q2_selected_feedback = undefined;
+  let Q2_explain_txt = undefined;
 
   // DERIVED STATES
 
@@ -51,6 +63,8 @@
     } else if (main_state == "PageConsent") {
       await gather_data();
       main_state = "PageQ1";
+    } else if (main_state == "PageQ1") {
+      main_state = "PageQ2";
     }
   }
 
@@ -113,6 +127,15 @@
             {answer_body}
             {feedback_AI_body}
             {feedback_human_body}
+            bind:likert_AI={Q1_likert_AI}
+            bind:likert_human={Q1_likert_human}
+          />
+        {:else if main_state == "PageQ2"}
+          <PageQ2
+            bind:bottom_bar_next_enabled
+            {sciperID}
+            bind:selected_feedback={Q2_selected_feedback}
+            bind:explain_txt={Q2_explain_txt}
           />
         {:else}
           Error : unkown main_state
@@ -183,10 +206,10 @@
 
   #progress_bar {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 2px;
+    height: 3px;
     background-color: #0f62fe;
     transition: all 1s;
   }

@@ -17,11 +17,11 @@
     export let feedback_AI_body;
     export let feedback_human_body;
 
+    export let likert_AI;
+    export let likert_human;
+
     // Pseudo random : if sciperID is even then random_layout_state is 0 else 1
     let random_layout_state = sciperID % 2;
-    // Likert answers
-    let likert_human;
-    let likert_AI;
     // Likert completed
     let likert_AI_completed;
     let likert_human_completed;

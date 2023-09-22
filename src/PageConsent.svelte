@@ -2,7 +2,7 @@
     import { _ } from "svelte-i18n";
     import { Checkbox } from "carbon-components-svelte";
     import { NumberInput } from "carbon-components-svelte";
-    import { ComboBox } from "carbon-components-svelte";
+    import { Dropdown } from "carbon-components-svelte";
 
     export let bottom_bar_next_enabled;
     export let sciperID;
@@ -45,16 +45,19 @@
 <br />
 <p>{$_("pageconsent_course")}</p>
 <br />
-<ComboBox
+<Dropdown
     direction="top"
     titleText="COURSE"
     placeholder="Select contact method"
     items={[
+        { id: undefined, text: " " },
         { id: "CourseA_ID", text: "CourseA" },
         { id: "CourseB_ID", text: "CourseB" },
         { id: "CourseC_ID", text: "CourseC" },
     ]}
-    bind:value={courseID}
+    bind:selectedId={courseID}
+    invalidText={$_("pageconsent_course_invalid")}
+    invalid={courseID == undefined}
 />
 
 <style>
