@@ -17,7 +17,7 @@
   // STATES
 
   // Current Page
-  let main_state = "PageQ1";
+  let main_state = "PageWelcome";
   // Bottom bar states
   let bottom_bar_next_enabled = true;
   // Student sciper ID (given by user)
@@ -165,9 +165,9 @@
     padding-bottom: 66px;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1200px) {
     #main_container {
-      width: 1024px;
+      width: 1200px;
       margin-top: 32px;
       margin-bottom: 32px;
       border-radius: 8px;
