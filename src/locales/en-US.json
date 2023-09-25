@@ -44,5 +44,15 @@
     "pageq3_fb_1": "Taking into account who made the feedback source, to what extent do you now associate Feedback 1 above with the following terms?",
     "pageq3_fb_2": "Taking into account who made the feedback source, to what extent do you now associate Feedback 2 above with the following terms?",
     "pageq3_AI_q": "To what extent do you associate AI as a feedback provider with the following terms?",
-    "pageq3_human_q": "To what extent do you associate human TA as a feedback provider with the following terms?"
+    "pageq3_human_q": "To what extent do you associate human TA as a feedback provider with the following terms?",
+    "pageq4_title": "Background information",
+    "pageq4_txt1": "Please fill in those extra details about your background :",
+    "pageq4_age": "Age",
+    "pageq4_edtech": "Since how many years have you been using educational technologies?",
+    "pageq4_gender": "Gender",
+    "pageq4_gender_male": "Male",
+    "pageq4_gender_female": "Female",
+    "pageq4_gender_nonbinary": "Non-binary",
+    "pageq4_gender_notsay": "Prefer not to say",
+    "pageq4_section": "Section (studies program)"
 }

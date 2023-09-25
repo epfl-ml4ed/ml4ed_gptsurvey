@@ -50,14 +50,14 @@
     titleText="COURSE"
     placeholder="Select contact method"
     items={[
-        { id: undefined, text: " " },
+        { id: null, text: " " },
         { id: "CourseA_ID", text: "CourseA" },
         { id: "CourseB_ID", text: "CourseB" },
         { id: "CourseC_ID", text: "CourseC" },
     ]}
     bind:selectedId={courseID}
     invalidText={$_("pageconsent_course_invalid")}
-    invalid={courseID == undefined}
+    invalid={courseID == null}
 />
 
 <style>

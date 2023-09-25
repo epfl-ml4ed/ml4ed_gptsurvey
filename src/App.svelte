@@ -9,6 +9,7 @@
   import PageQ1 from "./PageQ1.svelte";
   import PageQ2 from "./PageQ2.svelte";
   import PageQ3 from "./PageQ3.svelte";
+  import PageQ4 from "./PageQ4.svelte";
 
   // Initialize internationalization
   import "./i18n.js";
@@ -16,44 +17,45 @@
   // CONSTANTS
   let progress_values = {
     PageWelcome: 0,
-    PageConsent: 20,
-    PageQ1: 40,
-    PageQ2: 60,
-    PageQ3: 80,
+    PageConsent: 10,
+    PageQ1: 20,
+    PageQ2: 40,
+    PageQ3: 60,
+    PageQ4: 80,
   };
 
   // STATES
 
   // Current Page
-  let main_state = "PageQ1";
+  let main_state = "PageQ4";
   // Bottom bar states
   let bottom_bar_next_enabled = true;
   // Student sciper ID (given by user)
-  let sciperID = undefined;
+  let sciperID = null;
   // Course ID (given by user)
-  let courseID = undefined;
+  let courseID = null;
   // Course & Task names (gathered from server)
-  let course_name = undefined;
-  let task_name = undefined;
+  let course_name = null;
+  let task_name = null;
   // Task & Answer Body (gathered from server)
-  let task_body = undefined;
-  let answer_body = undefined;
+  let task_body = null;
+  let answer_body = null;
   // Feedbacks (gathered from server)
-  let feedback_AI_body = undefined;
-  let feedback_human_body = undefined;
+  let feedback_AI_body = null;
+  let feedback_human_body = null;
   // Student likert answers on page Q1 (given by user)
-  let Q1_likert_AI = undefined;
-  let Q1_likert_human = undefined;
+  let Q1_likert_AI = null;
+  let Q1_likert_human = null;
   // Student answers on page Q2 (given by user)
-  let Q2_selected_feedback = undefined;
-  let Q2_explain_txt = undefined;
+  let Q2_selected_feedback = null;
+  let Q2_explain_txt = null;
   // Student likert answers on page Q3 (given by user)
   // Initially same as Q1, then overwritten on page Q3
   $: Q3_likert_AI = Q1_likert_AI;
   $: Q3_likert_human = Q1_likert_human;
   // Student extra likert answers on page Q3 (given by user)
-  let Q3_extra_likert_AI = undefined;
-  let Q3_extra_likert_human = undefined;
+  let Q3_extra_likert_AI = null;
+  let Q3_extra_likert_human = null;
 
   // DERIVED STATES
 
@@ -76,6 +78,8 @@
       main_state = "PageQ2";
     } else if (main_state == "PageQ2") {
       main_state = "PageQ3";
+    } else if (main_state == "PageQ3") {
+      main_state = "PageQ4";
     }
   }
 
@@ -158,6 +162,13 @@
             bind:likert_human={Q3_likert_human}
             bind:extra_likert_AI={Q3_extra_likert_AI}
             bind:extra_likert_human={Q3_extra_likert_human}
+          />
+        {:else if main_state == "PageQ4"}
+          <PageQ4
+            bind:bottom_bar_next_enabled
+            {sciperID}
+            bind:selected_feedback={Q2_selected_feedback}
+            bind:explain_txt={Q2_explain_txt}
           />
         {:else}
           Error : unkown main_state

@@ -14,7 +14,7 @@
     export let completed;
 
     export let answers;
-    if (answers === undefined) {
+    if (answers === null) {
         answers = new Array(questions_labels.length)
             .fill(null)
             .map(() => Array(answers_labels.length).fill(false));

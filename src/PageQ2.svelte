@@ -8,12 +8,12 @@
     export let selected_feedback;
     export let explain_txt;
 
-    let selected_blind_feedback = undefined;
+    let selected_blind_feedback = null;
 
     explain_txt = "";
 
     $: bottom_bar_next_enabled =
-        selected_blind_feedback !== undefined && explain_txt !== "";
+        selected_blind_feedback !== null && explain_txt !== "";
 
     // Convert from feedback 1/2 to real feedback AI/human
     let random_layout_state = sciperID % 2;
@@ -23,7 +23,7 @@
         } else if (selected_blind_feedback == "feedback2") {
             selected_feedback = "feedback_human";
         } else {
-            selected_feedback = undefined;
+            selected_feedback = null;
         }
     } else {
         if (selected_blind_feedback == "feedback1") {
@@ -31,7 +31,7 @@
         } else if (selected_blind_feedback == "feedback2") {
             selected_feedback = "feedback_AI";
         } else {
-            selected_feedback = undefined;
+            selected_feedback = null;
         }
     }
 </script>
