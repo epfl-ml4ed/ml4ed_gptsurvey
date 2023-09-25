@@ -10,6 +10,7 @@
   import PageQ2 from "./PageQ2.svelte";
   import PageQ3 from "./PageQ3.svelte";
   import PageQ4 from "./PageQ4.svelte";
+  import PageThanks from "./PageThanks.svelte";
 
   // Initialize internationalization
   import "./i18n.js";
@@ -22,12 +23,13 @@
     PageQ2: 40,
     PageQ3: 60,
     PageQ4: 80,
+    PageThanks: 100,
   };
 
   // STATES
 
   // Current Page
-  let main_state = "PageQ4";
+  let main_state = "PageQ1";
   // Bottom bar states
   let bottom_bar_next_enabled = true;
   // Student sciper ID (given by user)
@@ -80,6 +82,8 @@
       main_state = "PageQ3";
     } else if (main_state == "PageQ3") {
       main_state = "PageQ4";
+    } else if (main_state == "PageQ4") {
+      main_state = "PageThanks";
     }
   }
 
@@ -92,7 +96,7 @@
     task_name = "DummyTaskName";
     // Task & Answer Body (gathered from server)
     task_body =
-      "This is a dummy task body in markdown. This is an equation $x^2 = y$";
+    "This is a dummy task body in markdown. $$\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)$$";
     answer_body =
       "This is a dummy answer body in markdown with another equation $x*y=0$";
     // Feedbacks (gathered from server)
@@ -106,7 +110,7 @@
     task_name = "DummyTaskName";
     // Task & Answer Body (gathered from server)
     task_body =
-      "This is a dummy task body in markdown. This is an equation $x^2 = y$";
+      "This is a dummy task body in markdown. $$\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)$$";
     answer_body =
       "This is a dummy answer body in markdown with another equation $x*y=0$";
     // Feedbacks (gathered from server)
@@ -114,6 +118,16 @@
     feedback_human_body = "Dummy Human feedback. $i+2j$";
   }
   gather_data_dummy();
+
+  // In production always start at PageWelcome, ask before quit
+  if (import.meta.env.MODE == "production") {
+    main_state = "PageWelcome";
+    window.onbeforeunload = (e) => "Are you sure you want to quit ?";
+  }
+  // On last page disable quit popup
+  $: if (main_state == "PageThanks") {
+    window.onbeforeunload = null;
+  }
 </script>
 
 <main>
@@ -170,25 +184,32 @@
             bind:selected_feedback={Q2_selected_feedback}
             bind:explain_txt={Q2_explain_txt}
           />
+        {:else if main_state == "PageThanks"}
+          <PageThanks />
         {:else}
           Error : unkown main_state
         {/if}
       </div>
     {/key}
-
-    <div id="bottom_bar">
-      <p
-        style="color: {bottom_bar_next_enabled ? 'black' : '#a60606'}"
-        id="next_text"
+    {#if main_state != "PageThanks"}
+      <div
+        id="bottom_bar"
+        in:fly={{ y: -80, x: 0, duration: 600 }}
+        out:fly={{ y: 80, x: 0, duration: 600 }}
       >
-        {bottom_bar_message}
-      </p>
-      <Button
-        disabled={!bottom_bar_next_enabled}
-        icon={ChevronRight}
-        on:click={next_func}>{$_("common_next")}</Button
-      >
-    </div>
+        <p
+          style="color: {bottom_bar_next_enabled ? 'black' : '#a60606'}"
+          id="next_text"
+        >
+          {bottom_bar_message}
+        </p>
+        <Button
+          disabled={!bottom_bar_next_enabled}
+          icon={ChevronRight}
+          on:click={next_func}>{$_("common_next")}</Button
+        >
+      </div>
+    {/if}
 
     <div style="width: {progress}%;" id="progress_bar" />
   </div>

@@ -12,6 +12,7 @@
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "carbon-components-svelte": "^0.80.0",
     "carbon-icons-svelte": "^12.3.0",
+    "carbon-preprocess-svelte": "^0.10.0",
     "svelte": "^4.0.5",
     "vite": "^4.4.5"
   },
