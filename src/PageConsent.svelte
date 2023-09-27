@@ -1,18 +1,33 @@
 <script>
     import { _ } from "svelte-i18n";
     import { Checkbox } from "carbon-components-svelte";
-    import { NumberInput } from "carbon-components-svelte";
+    import { TextInput } from "carbon-components-svelte";
     import { Dropdown } from "carbon-components-svelte";
 
     export let bottom_bar_next_enabled;
     export let sciperID;
     export let courseID;
+    export let course_name;
 
     let agree = false;
     let over18 = false;
     let sciperID_range_invalid = true;
+
+    let courses_items = [
+        { id: null, text: " " },
+        {
+            id: "CS-101",
+            text: "CS-101 : Advanced information, computation, communication I",
+        },
+        { id: "CourseB_ID", text: "CourseB" },
+        { id: "CourseC_ID", text: "CourseC" },
+    ];
+
+    sciperID = "";
+    $: course_name = courses_items.filter((c) => c.id == courseID)[0].text;
     $: sciperID_range_invalid =
-        !sciperID || sciperID < 100000 || sciperID > 999999;
+        sciperID.length != 6 ||
+        ![...sciperID].every((c) => "0123456789".includes(c));
     $: bottom_bar_next_enabled = agree && over18 && !sciperID_range_invalid;
 </script>
 
@@ -35,8 +50,7 @@
 <br />
 <p>{$_("pageconsent_sciper")}</p>
 <br />
-<NumberInput
-    hideSteppers
+<TextInput
     label="SCIPER"
     bind:value={sciperID}
     bind:invalid={sciperID_range_invalid}
@@ -49,12 +63,7 @@
     direction="top"
     titleText="COURSE"
     placeholder="Select contact method"
-    items={[
-        { id: null, text: " " },
-        { id: "CourseA_ID", text: "CourseA" },
-        { id: "CourseB_ID", text: "CourseB" },
-        { id: "CourseC_ID", text: "CourseC" },
-    ]}
+    items={courses_items}
     bind:selectedId={courseID}
     invalidText={$_("pageconsent_course_invalid")}
     invalid={courseID == null}

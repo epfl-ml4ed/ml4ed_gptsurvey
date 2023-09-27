@@ -1,7 +1,7 @@
 <script>
   import "carbon-components-svelte/css/white.css";
   import { _ } from "svelte-i18n";
-  import { fly } from "svelte/transition";
+  import { fly, fade } from "svelte/transition";
   import { Button } from "carbon-components-svelte";
   import ChevronRight from "carbon-icons-svelte/lib/ChevronRight.svelte";
   import PageWelcome from "./PageWelcome.svelte";
@@ -29,9 +29,11 @@
   // STATES
 
   // Current Page
-  let main_state = "PageQ1";
+  let main_state = "PageWelcome";
   // Bottom bar states
   let bottom_bar_next_enabled = true;
+  // Loading popup
+  let loading_popup_msg = "";
   // Student sciper ID (given by user)
   let sciperID = null;
   // Course ID (given by user)
@@ -75,7 +77,6 @@
       main_state = "PageConsent";
     } else if (main_state == "PageConsent") {
       await gather_data();
-      main_state = "PageQ1";
     } else if (main_state == "PageQ1") {
       main_state = "PageQ2";
     } else if (main_state == "PageQ2") {
@@ -89,45 +90,56 @@
 
   // Gather all necessary student data from server
   async function gather_data() {
-    // Wait 1 sec
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    // Course & Task names (gathered from server)
-    course_name = "DummyCourseName";
-    task_name = "DummyTaskName";
-    // Task & Answer Body (gathered from server)
-    task_body =
-    "This is a dummy task body in markdown. $$\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)$$";
-    answer_body =
-      "This is a dummy answer body in markdown with another equation $x*y=0$";
-    // Feedbacks (gathered from server)
-    feedback_AI_body = "Dummy AI feedback. $x+y=z$";
-    feedback_human_body = "Dummy Human feedback. $i+2j$";
+    loading_popup_msg = $_("common_loading");
+    try {
+      const response = await fetch(
+        `${
+          import.meta.env.VITE_BACKEND
+        }gather_data?sciperID=${sciperID}&courseID=${courseID}`
+      );
+      let resp_j = await response.json();
+      if (!response.ok) {
+        loading_popup_msg = `Error : ${resp_j.detail}`;
+      } else {
+        task_name = resp_j["TaskName"];
+        task_body = resp_j["TaskBody"];
+        answer_body = resp_j["TaskSolutionBody"];
+        feedback_AI_body = resp_j["AIFeedback"];
+        feedback_human_body = resp_j["HumanFeedback"];
+        // Go to next page
+        main_state = "PageQ1";
+        loading_popup_msg = "";
+      }
+    } catch (error) {
+      loading_popup_msg = `Error : Server Unreachable (${error})`;
+    }
+    // Wait 3secs and close popup
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    loading_popup_msg = "";
   }
-  // TMP to remove
-  function gather_data_dummy() {
-    // Course & Task names (gathered from server)
-    course_name = "DummyCourseName";
-    task_name = "DummyTaskName";
-    // Task & Answer Body (gathered from server)
-    task_body =
-      "This is a dummy task body in markdown. $$\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)$$";
-    answer_body =
-      "This is a dummy answer body in markdown with another equation $x*y=0$";
-    // Feedbacks (gathered from server)
-    feedback_AI_body = "Dummy AI feedback. $x+y=z$";
-    feedback_human_body = "Dummy Human feedback. $i+2j$";
-  }
-  gather_data_dummy();
 
   // In production always start at PageWelcome, ask before quit
   if (import.meta.env.MODE == "production") {
     main_state = "PageWelcome";
     window.onbeforeunload = (e) => "Are you sure you want to quit ?";
   }
+
   // On last page disable quit popup
   $: if (main_state == "PageThanks") {
     window.onbeforeunload = null;
   }
+
+  // In dev mode, pre-fill states with dummy data
+  // if (import.meta.env.MODE == "development") {
+  //   course_name = "DummyCourseName";
+  //   task_name = "DummyTaskName";
+  //   task_body =
+  //     "This is a dummy task body in markdown. $$\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)$$";
+  //   answer_body =
+  //     "This is a dummy answer body in markdown with another equation $x*y=0$";
+  //   feedback_AI_body = "Dummy AI feedback. $x+y=z$";
+  //   feedback_human_body = "Dummy Human feedback. $i+2j$";
+  // }
 </script>
 
 <main>
@@ -145,6 +157,7 @@
             bind:bottom_bar_next_enabled
             bind:sciperID
             bind:courseID
+            bind:course_name
           />
         {:else if main_state == "PageQ1"}
           <PageQ1
@@ -210,8 +223,12 @@
         >
       </div>
     {/if}
-
     <div style="width: {progress}%;" id="progress_bar" />
+    {#if loading_popup_msg !== ""}
+      <div id="loading_popup" transition:fade>
+        <h3>{loading_popup_msg}</h3>
+      </div>
+    {/if}
   </div>
 </main>
 
@@ -289,5 +306,21 @@
     margin-right: 16px;
     opacity: 50%;
     text-align: center;
+  }
+
+  #loading_popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #efefef9b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    backdrop-filter: blur(8px);
+    padding: 16px;
   }
 </style>

@@ -209,4 +209,17 @@
         margin-bottom: 16px;
         padding: 16px;
     }
+
+    :global(.markdown-body) {
+        background-color: transparent;
+    }
+
+    :global(.markdown-body pre) {
+        background-color: #ff780017;
+        font-weight: bold;
+    }
+
+    :global(.markdown-body *) {
+        list-style: revert;
+    }
 </style>

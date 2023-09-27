@@ -2,6 +2,8 @@
     import { _ } from "svelte-i18n";
     import { Carta, CartaViewer } from "carta-md";
     import { math } from "@cartamd/plugin-math";
+    import "github-markdown-css/github-markdown-light.css";
+    import "katex/dist/katex.css";
     import Likert from "./Likert.svelte";
 
     const carta = new Carta({
@@ -48,7 +50,7 @@
         <h3>Feedback 1</h3>
         <div class="yellow_block_square">
             {#if random_layout_state == 0}
-                <CartaViewer {carta} value={feedback_AI_body} />
+                <CartaViewer {carta} value={feedback_AI_body} theme="light" />
             {:else}
                 <CartaViewer {carta} value={feedback_human_body} />
             {/if}
@@ -154,5 +156,18 @@
         padding: 16px;
         border-top: solid 1px #e4d900;
         border-bottom: solid 1px #e4d900;
+    }
+
+    :global(.markdown-body) {
+        background-color: transparent;
+    }
+
+    :global(.markdown-body pre) {
+        background-color: #ff780017;
+        font-weight: bold;
+    }
+
+    :global(.markdown-body *) {
+        list-style: revert;
     }
 </style>
