@@ -60,6 +60,11 @@
   // Student extra likert answers on page Q3 (given by user)
   let Q3_extra_likert_AI = null;
   let Q3_extra_likert_human = null;
+  // Student background / demographics (given by user)
+  let Q4_student_age = null;
+  let Q4_student_edtech = null;
+  let Q4_student_gender = null;
+  let Q4_student_section = null;
 
   // DERIVED STATES
 
@@ -84,7 +89,7 @@
     } else if (main_state == "PageQ3") {
       main_state = "PageQ4";
     } else if (main_state == "PageQ4") {
-      main_state = "PageThanks";
+      await send_results();
     }
   }
 
@@ -112,6 +117,58 @@
       }
     } catch (error) {
       loading_popup_msg = `Error : Server Unreachable (${error})`;
+    }
+    // Wait 3secs and close popup
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    loading_popup_msg = "";
+  }
+
+  // Send results to server
+  async function send_results() {
+    let results = {
+      SciperID: sciperID,
+      CourseID: courseID,
+      task_name: task_name,
+      results: {
+        Q1_likert_AI: Q1_likert_AI,
+        Q1_likert_human: Q1_likert_human,
+        Q2_selected_feedback: Q2_selected_feedback,
+        Q2_explain_txt: Q2_explain_txt,
+        Q3_likert_AI: Q3_likert_AI,
+        Q3_likert_human: Q3_likert_human,
+        Q3_extra_likert_AI: Q3_extra_likert_AI,
+        Q3_extra_likert_human: Q3_extra_likert_human,
+        Q4_student_age: Q4_student_age,
+        Q4_student_edtech: Q4_student_edtech,
+        Q4_student_gender: Q4_student_gender,
+        Q4_student_section: Q4_student_section,
+      },
+    };
+    loading_popup_msg = $_("common_loading");
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND}write_results`,
+        {
+          method: "POST",
+          body: JSON.stringify(results),
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
+      let resp_j = await response.json();
+      if (!response.ok) {
+        loading_popup_msg = `Error : ${resp_j.detail}`;
+      } else {
+        // Go to next page
+        main_state = "PageThanks";
+        loading_popup_msg = "";
+      }
+    } catch (error) {
+      loading_popup_msg = `Error : Server Unreachable, 
+      make sure your connection is working and try again. 
+      Otherwise contact support. (${error})`;
     }
     // Wait 3secs and close popup
     await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -193,9 +250,10 @@
         {:else if main_state == "PageQ4"}
           <PageQ4
             bind:bottom_bar_next_enabled
-            {sciperID}
-            bind:selected_feedback={Q2_selected_feedback}
-            bind:explain_txt={Q2_explain_txt}
+            bind:student_age={Q4_student_age}
+            bind:student_edtech={Q4_student_edtech}
+            bind:student_gender={Q4_student_gender}
+            bind:student_section={Q4_student_section}
           />
         {:else if main_state == "PageThanks"}
           <PageThanks />
