@@ -55,8 +55,8 @@
   let Q2_explain_txt = null;
   // Student likert answers on page Q3 (given by user)
   // Initially same as Q1, then overwritten on page Q3
-  $: Q3_likert_AI = Q1_likert_AI;
-  $: Q3_likert_human = Q1_likert_human;
+  let Q3_likert_AI = null;
+  let Q3_likert_human = null;
   // Student extra likert answers on page Q3 (given by user)
   let Q3_extra_likert_AI = null;
   let Q3_extra_likert_human = null;
@@ -85,6 +85,8 @@
     } else if (main_state == "PageQ1") {
       main_state = "PageQ2";
     } else if (main_state == "PageQ2") {
+      Q3_likert_AI = structuredClone(Q1_likert_AI);
+      Q3_likert_human = structuredClone(Q1_likert_human);
       main_state = "PageQ3";
     } else if (main_state == "PageQ3") {
       main_state = "PageQ4";
