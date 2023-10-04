@@ -25,15 +25,15 @@
         },
         {
             id: "CS-119(d)",
-            text: "CS-119(d): Information, calcul, communication",
+            text: "CS-119(d): Information, calcul, communication (Math)",
         },
         {
             id: "CS-119(g)",
-            text: "CS-119(g): Information, calcul, communication",
+            text: "CS-119(g): Information, calcul, communication (SV)",
         },
         {
             id: "CS-119(h)",
-            text: "CS-119(h): Information, calcul, communication",
+            text: "CS-119(h): Information, calcul, communication (GC)",
         },
         { id: "CS-401", text: "CS-401: Applied data analysis" },
         {
