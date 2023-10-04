@@ -16,11 +16,34 @@
     let courses_items = [
         { id: null, text: " " },
         {
-            id: "CS-101",
-            text: "CS-101 : Advanced information, computation, communication I",
+            id: "BIO-210",
+            text: "BIO-210: Applied software engineering for life sciences",
         },
-        { id: "CourseB_ID", text: "CourseB" },
-        { id: "CourseC_ID", text: "CourseC" },
+        {
+            id: "CS-101",
+            text: "CS-101: Advanced information, computation, communication I",
+        },
+        {
+            id: "CS-119(d)",
+            text: "CS-119(d): Information, calcul, communication",
+        },
+        {
+            id: "CS-119(g)",
+            text: "CS-119(g): Information, calcul, communication",
+        },
+        {
+            id: "CS-119(h)",
+            text: "CS-119(h): Information, calcul, communication",
+        },
+        { id: "CS-401", text: "CS-401: Applied data analysis" },
+        {
+            id: "CS-431",
+            text: "CS-431: Introduction to natural language processing",
+        },
+        { id: "CS-433", text: "CS-433: Machine learning" },
+        { id: "CS-502", text: "CS-502: Deep learning in biomedicine" },
+        { id: "MATH-101(c)", text: "MATH-101(c): Analysis I" },
+        { id: "MATH-101(ol)", text: "MATH-101(ol): Analyse I (online)" },
     ];
 
     sciperID = "";
