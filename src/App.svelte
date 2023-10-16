@@ -11,6 +11,7 @@
   import PageQ3 from "./PageQ3.svelte";
   import PageQ4 from "./PageQ4.svelte";
   import PageThanks from "./PageThanks.svelte";
+  import PageAdmin from "./PageAdmin.svelte";
 
   // Initialize internationalization
   import "./i18n.js";
@@ -188,6 +189,11 @@
     window.onbeforeunload = null;
   }
 
+  // Special URL for admin page to upload csv data
+  if (window.location.href.split("?")[1] == "courses_upload_csv_data") {
+    main_state = "PageAdmin";
+  }
+
   // In dev mode, pre-fill states with dummy data
   // if (import.meta.env.MODE == "development") {
   //   course_name = "DummyCourseName";
@@ -259,12 +265,14 @@
           />
         {:else if main_state == "PageThanks"}
           <PageThanks />
+        {:else if main_state == "PageAdmin"}
+          <PageAdmin />
         {:else}
           Error : unkown main_state
         {/if}
       </div>
     {/key}
-    {#if main_state != "PageThanks"}
+    {#if main_state != "PageThanks" && main_state != "PageAdmin"}
       <div
         id="bottom_bar"
         in:fly={{ y: -80, x: 0, duration: 600 }}

@@ -85,7 +85,6 @@
 <Dropdown
     direction="top"
     titleText="COURSE"
-    placeholder="Select contact method"
     items={courses_items}
     bind:selectedId={courseID}
     invalidText={$_("pageconsent_course_invalid")}
