@@ -3,7 +3,18 @@
     import { _, json } from "svelte-i18n";
     import { RadioButton, RadioButtonGroup } from "carbon-components-svelte";
 
-    export let questions_labels = ["Precise", "Factual", "Fair"];
+    export let questions_labels = [
+        "Precise",
+        "Fair",
+        "Factual",
+        "Specific",
+        "Helpful",
+        "Relevant",
+        "Informative",
+        "Applicable",
+        "Sincere",
+        "Authentic",
+    ];
     export let answers_labels = [
         $_("common_stronglydisagree"),
         $_("common_disagree"),

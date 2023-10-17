@@ -6,4 +6,4 @@ Install dependencies : `npm install`
 
 Run in dev mode : `npm run dev`
 
-Build : `npm run build --base=/ml4ed_gptsurvey/`
+Build : `npm run build --base=/ml4ed_survey/`

@@ -185,7 +185,7 @@
   }
 
   // On last page disable quit popup
-  $: if (main_state == "PageThanks") {
+  $: if (main_state == "PageThanks" || main_state == "PageAdmin") {
     window.onbeforeunload = null;
   }
 

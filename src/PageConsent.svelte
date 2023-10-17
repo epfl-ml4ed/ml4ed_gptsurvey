@@ -9,8 +9,7 @@
     export let courseID;
     export let course_name;
 
-    let agree = false;
-    let over18 = false;
+    let agree_and_over18 = false;
     let sciperID_range_invalid = true;
 
     let courses_items = [
@@ -51,7 +50,7 @@
     $: sciperID_range_invalid =
         sciperID.length != 6 ||
         ![...sciperID].every((c) => "0123456789".includes(c));
-    $: bottom_bar_next_enabled = agree && over18 && !sciperID_range_invalid;
+    $: bottom_bar_next_enabled = agree_and_over18 && !sciperID_range_invalid;
 </script>
 
 <h1 id="title">{$_("pageconsent_title")}</h1>
@@ -59,16 +58,16 @@
     <p style="margin-bottom">{$_("pageconsent_text")}</p>
 </div>
 <br />
-<Checkbox
-    bind:checked={agree}
-    id="agree"
-    labelText={$_("pageconsent_checkbox_agree")}
+<div
+    style="border: 1px solid rgb(242, 242, 242); margin-bottom:8px; margin-top:8px"
 />
-<br />
 <Checkbox
-    bind:checked={over18}
-    id="over18"
-    labelText={$_("pageconsent_checkbox_over18")}
+    bind:checked={agree_and_over18}
+    id="agree"
+    labelText={$_("pageconsent_checkbox_agree_and_over18")}
+/>
+<div
+    style="border: 1px solid rgb(242, 242, 242); margin-bottom:8px; margin-top:8px"
 />
 <br />
 <p>{$_("pageconsent_sciper")}</p>

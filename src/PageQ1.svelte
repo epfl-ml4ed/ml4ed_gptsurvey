@@ -157,6 +157,11 @@
         border-top: solid 1px #e4d900;
         border-bottom: solid 1px #e4d900;
     }
+    @media (min-width: 850px) {
+        .yellow_block_square {
+            height: 300px;
+        }
+    }
 
     :global(.markdown-body) {
         background-color: transparent;
