@@ -14,7 +14,7 @@
 </script>
 
 <h1 id="title">{$_("pagewelcome_title")}</h1>
-<div id="lang_selector">
+<div id="lang_selector" style="display:none;">
     <p style="text-align: center;margin-bottom: 8px">
         {$_("pagewelcome_lang")}
     </p>
@@ -25,7 +25,14 @@
         >Français</Button
     >
 </div>
-<p>{$_("pagewelcome_intro")}</p>
+<p style="margin-top:32px">
+    {$_("pagewelcome_intro1")}
+    <a
+        href="https://drive.google.com/file/d/1x2Z1pPcXhxwjZMmTaeIPI3DNQU-93cwK/view?usp=sharing"
+        >{$_("pagewelcome_intro2")}</a
+    >
+    {$_("pagewelcome_intro3")}
+</p>
 
 <style>
     #title {

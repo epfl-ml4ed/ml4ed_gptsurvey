@@ -7,8 +7,6 @@
         "Precise",
         "Fair",
         "Factual",
-        "Specific",
-        "Helpful",
         "Relevant",
         "Informative",
         "Applicable",
@@ -76,6 +74,7 @@
         align-items: center;
         justify-content: center;
         font-weight: 600;
+        font-size: 0.8em;
     }
     .table_side_label {
         display: flex;
@@ -85,6 +84,7 @@
         align-items: center;
         justify-content: center;
         font-weight: 600;
+        font-size: 0.8em;
     }
     .table_cell {
         display: flex;

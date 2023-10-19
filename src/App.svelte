@@ -195,16 +195,17 @@
   }
 
   // In dev mode, pre-fill states with dummy data
-  // if (import.meta.env.MODE == "development") {
-  //   course_name = "DummyCourseName";
-  //   task_name = "DummyTaskName";
-  //   task_body =
-  //     "This is a dummy task body in markdown. $$\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)$$";
-  //   answer_body =
-  //     "This is a dummy answer body in markdown with another equation $x*y=0$";
-  //   feedback_AI_body = "Dummy AI feedback. $x+y=z$";
-  //   feedback_human_body = "Dummy Human feedback. $i+2j$";
-  // }
+  if (import.meta.env.MODE == "development") {
+    main_state = "PageWelcome";
+    course_name = "DummyCourseName";
+    task_name = "DummyTaskName";
+    task_body =
+      "This is a dummy task body in markdown. $$\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)$$";
+    answer_body =
+      "This is a dummy answer body in markdown with another equation $x*y=0$";
+    feedback_AI_body = "Dummy AI feedback. $x+y=z$";
+    feedback_human_body = "Dummy Human feedback. $i+2j$";
+  }
 </script>
 
 <main>
@@ -243,6 +244,8 @@
             {sciperID}
             bind:selected_feedback={Q2_selected_feedback}
             bind:explain_txt={Q2_explain_txt}
+            {feedback_AI_body}
+            {feedback_human_body}
           />
         {:else if main_state == "PageQ3"}
           <PageQ3

@@ -55,7 +55,13 @@
                 <CartaViewer {carta} value={feedback_human_body} />
             {/if}
         </div>
-        <p style="margin-left:16px;margin-right:16px">{$_("pageq1_fb_1")}</p>
+        <div
+            style="background-color:white;margin:8px;border-radius:8px;padding:8px;border:solid 1px #e6e6e6"
+        >
+            <p style="margin-left:16px;margin-right:16px;font-weight:800">
+                {$_("pageq1_fb_1")}
+            </p>
+        </div>
         {#if random_layout_state == 0}
             <Likert
                 bind:answers={likert_AI}
@@ -77,7 +83,13 @@
                 <CartaViewer {carta} value={feedback_AI_body} />
             {/if}
         </div>
-        <p style="margin-left:16px;margin-right:16px">{$_("pageq1_fb_2")}</p>
+        <div
+            style="background-color:white;margin:8px;border-radius:8px;padding:8px;border:solid 1px #e6e6e6"
+        >
+            <p style="margin-left:16px;margin-right:16px;font-weight:800">
+                {$_("pageq1_fb_2")}
+            </p>
+        </div>
         {#if random_layout_state == 0}
             <Likert
                 bind:answers={likert_human}

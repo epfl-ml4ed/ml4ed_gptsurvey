@@ -26,12 +26,7 @@
     let extra_likert_AI_completed;
     let extra_likert_human_completed;
 
-    let extra_questions_labels = [
-        "Trustworthy",
-        "Well-intended",
-        "Reliable",
-        "Ethical",
-    ];
+    let extra_questions_labels = ["Trustworthy", "Reliable", "Ethical"];
 
     $: bottom_bar_next_enabled =
         likert_AI_completed &&
@@ -70,7 +65,15 @@
                 <CartaViewer {carta} value={feedback_human_body} />
             {/if}
         </div>
-        <p style="margin-left:16px;margin-right:16px">{$_("pageq3_fb_1")}</p>
+        <div
+            style="background-color:white;margin:8px;border-radius:8px;padding:8px;border:solid 1px #e6e6e6"
+        >
+            <p style="margin-left:16px;margin-right:16px;font-weight:800">
+                {$_("pageq3_fb")
+                    .replace("[SOURCE]", feeback1_real_name)
+                    .replace("[FEEDBACK_IDX]", "1")}
+            </p>
+        </div>
         {#if random_layout_state == 0}
             <Likert
                 bind:answers={likert_AI}
@@ -85,15 +88,19 @@
         <br />
         <div style="border-top: solid 1px #dbdbdb" />
         <br />
-        {#if random_layout_state == 0}
-            <p style="margin-left:16px;margin-right:16px">
-                {$_("pageq3_AI_q")}
-            </p>
-        {:else}
-            <p style="margin-left:16px;margin-right:16px">
-                {$_("pageq3_human_q")}
-            </p>
-        {/if}
+        <div
+            style="background-color:white;margin:8px;border-radius:8px;padding:8px;border:solid 1px #e6e6e6"
+        >
+            {#if random_layout_state == 0}
+                <p style="margin-left:16px;margin-right:16px;font-weight:800">
+                    {$_("pageq3_AI_q")}
+                </p>
+            {:else}
+                <p style="margin-left:16px;margin-right:16px;font-weight:800">
+                    {$_("pageq3_human_q")}
+                </p>
+            {/if}
+        </div>
         {#if random_layout_state == 0}
             <Likert
                 questions_labels={extra_questions_labels}
@@ -118,7 +125,15 @@
                 <CartaViewer {carta} value={feedback_AI_body} />
             {/if}
         </div>
-        <p style="margin-left:16px;margin-right:16px">{$_("pageq3_fb_2")}</p>
+        <div
+            style="background-color:white;margin:8px;border-radius:8px;padding:8px;border:solid 1px #e6e6e6"
+        >
+            <p style="margin-left:16px;margin-right:16px;font-weight:800">
+                {$_("pageq3_fb")
+                    .replace("[SOURCE]", feeback2_real_name)
+                    .replace("[FEEDBACK_IDX]", "2")}
+            </p>
+        </div>
         {#if random_layout_state == 0}
             <Likert
                 bind:answers={likert_human}
@@ -133,15 +148,19 @@
         <br />
         <div style="border-top: solid 1px #dbdbdb" />
         <br />
-        {#if random_layout_state == 0}
-            <p style="margin-left:16px;margin-right:16px">
-                {$_("pageq3_human_q")}
-            </p>
-        {:else}
-            <p style="margin-left:16px;margin-right:16px">
-                {$_("pageq3_AI_q")}
-            </p>
-        {/if}
+        <div
+            style="background-color:white;margin:8px;border-radius:8px;padding:8px;border:solid 1px #e6e6e6"
+        >
+            {#if random_layout_state == 0}
+                <p style="margin-left:16px;margin-right:16px;font-weight:800">
+                    {$_("pageq3_human_q")}
+                </p>
+            {:else}
+                <p style="margin-left:16px;margin-right:16px;font-weight:800">
+                    {$_("pageq3_AI_q")}
+                </p>
+            {/if}
+        </div>
         {#if random_layout_state == 0}
             <Likert
                 questions_labels={extra_questions_labels}
