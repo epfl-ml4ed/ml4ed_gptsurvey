@@ -136,6 +136,11 @@
         border: solid 1px #e4d900;
         border-radius: 8px;
     }
+    @media (min-width: 850px) {
+        .yellow_block {
+            height: 300px;
+        }
+    }
 
     #columns_container {
         display: flex;
