@@ -9,6 +9,10 @@
     export let courseID;
     export let course_name;
 
+    sciperID = "";
+
+    let selected_courseID = null;
+    let selected_taskID = null;
     let agree_and_over18 = false;
     let sciperID_range_invalid = true;
 
@@ -26,31 +30,34 @@
             id: "CS-119(d)",
             text: "CS-119(d): Information, calcul, communication (Math)",
         },
-        {
-            id: "CS-119(g)",
-            text: "CS-119(g): Information, calcul, communication (SV)",
-        },
+        // {
+        //     id: "CS-119(g)",
+        //     text: "CS-119(g): Information, calcul, communication (SV)",
+        // },
         {
             id: "CS-119(h)",
             text: "CS-119(h): Information, calcul, communication (GC)",
         },
         { id: "CS-401", text: "CS-401: Applied data analysis" },
-        {
-            id: "CS-431",
-            text: "CS-431: Introduction to natural language processing",
-        },
-        { id: "CS-433", text: "CS-433: Machine learning" },
-        { id: "CS-502", text: "CS-502: Deep learning in biomedicine" },
-        { id: "MATH-101(c)", text: "MATH-101(c): Analysis I" },
-        { id: "MATH-101(ol)", text: "MATH-101(ol): Analyse I (online)" },
+        // {
+        //     id: "CS-431",
+        //     text: "CS-431: Introduction to natural language processing",
+        // },
+        // { id: "CS-433", text: "CS-433: Machine learning" },
+        // { id: "CS-502", text: "CS-502: Deep learning in biomedicine" },
+        { id: "MATH-101(c)", text: "MATH-101(c): Analysis I", tasks: ["Exercice14", "Exercice15"] },
+        { id: "MATH-101(ol)", text: "MATH-101(ol): Analyse I (online)", tasks: ["Exercice14", "Exercice15"] },
     ];
 
-    sciperID = "";
-    $: course_name = courses_items.filter((c) => c.id == courseID)[0].text;
+    $: task_required = courses_items.filter((c) => c.id === selected_courseID)[0].tasks !== undefined;
+    $: tasks_items = courses_items.filter((c) => c.id === selected_courseID)[0].tasks?.map((t) => ({ id: t, text: t })).concat([{ id: null, text: " " }]);
+    $: course_name = courses_items.filter((c) => c.id === selected_courseID)[0].text;
+    $: courseID = (task_required) ? selected_courseID + "###" + selected_taskID : selected_courseID;
+    $: task_valid = (selected_taskID && task_required) || !task_required;
     $: sciperID_range_invalid =
         sciperID.length != 6 ||
         ![...sciperID].every((c) => "0123456789".includes(c));
-    $: bottom_bar_next_enabled = agree_and_over18 && !sciperID_range_invalid;
+    $: bottom_bar_next_enabled = agree_and_over18 && !sciperID_range_invalid && courseID && task_valid;
 </script>
 
 <h1 id="title">{$_("pageconsent_title")}</h1>
@@ -73,7 +80,7 @@
 <p>{$_("pageconsent_sciper")}</p>
 <br />
 <TextInput
-    label="SCIPER"
+    labelText="SCIPER"
     bind:value={sciperID}
     bind:invalid={sciperID_range_invalid}
     invalidText={$_("pageconsent_sciper_invalid")}
@@ -85,10 +92,24 @@
     direction="top"
     titleText="COURSE"
     items={courses_items}
-    bind:selectedId={courseID}
+    bind:selectedId={selected_courseID}
     invalidText={$_("pageconsent_course_invalid")}
     invalid={courseID == null}
 />
+
+{#if task_required}
+<br />
+    <p>{$_("pageconsent_task")}</p>
+    <br />
+    <Dropdown
+        direction="top"
+        titleText="TASK"
+        items={tasks_items}
+        bind:selectedId={selected_taskID}
+        invalidText={$_("pageconsent_task_invalid")}
+        invalid={!task_valid}
+    />
+{/if}
 
 <style>
     #title {

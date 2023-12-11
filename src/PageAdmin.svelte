@@ -44,8 +44,10 @@
         },
         { id: "CS-433", text: "CS-433: Machine learning" },
         { id: "CS-502", text: "CS-502: Deep learning in biomedicine" },
-        { id: "MATH-101(c)", text: "MATH-101(c): Analysis I" },
-        { id: "MATH-101(ol)", text: "MATH-101(ol): Analyse I (online)" },
+        { id: "MATH-101(c)###Exercice14", text: "MATH-101(c): Analysis I, Task: Exercice 14" },
+        { id: "MATH-101(c)###Exercice15", text: "MATH-101(c): Analysis I, Task: Exercice 15" },
+        { id: "MATH-101(ol)###Exercice14", text: "MATH-101(ol): Analyse I (online), Task: Exercice 14" },
+        { id: "MATH-101(ol)###Exercice15", text: "MATH-101(ol): Analyse I (online), Task: Exercice 15" },
     ];
 
     // Send results to server
@@ -91,6 +93,10 @@
         invalidText={$_("pageconsent_course_invalid")}
         invalid={courseID == null}
     />
+    {#if courseID}
+        <p>Backend database courseID :</p>
+        <p><b>{courseID}</b></p>
+    {/if}
     <div style="margin-top: 32px">
         <FileUploaderDropContainer
             labelText="Drag and drop a .csv file here or click to upload"
@@ -121,5 +127,8 @@
     p {
         margin: 10px;
         text-align: center;
+    }
+    b {
+        font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
     }
 </style>
