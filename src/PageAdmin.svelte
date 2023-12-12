@@ -29,25 +29,25 @@
             id: "CS-119(d)",
             text: "CS-119(d): Information, calcul, communication (Math)",
         },
-        {
-            id: "CS-119(g)",
-            text: "CS-119(g): Information, calcul, communication (SV)",
-        },
+        // {
+        //     id: "CS-119(g)",
+        //     text: "CS-119(g): Information, calcul, communication (SV)",
+        // },
         {
             id: "CS-119(h)",
             text: "CS-119(h): Information, calcul, communication (GC)",
         },
         { id: "CS-401", text: "CS-401: Applied data analysis" },
-        {
-            id: "CS-431",
-            text: "CS-431: Introduction to natural language processing",
-        },
-        { id: "CS-433", text: "CS-433: Machine learning" },
-        { id: "CS-502", text: "CS-502: Deep learning in biomedicine" },
-        { id: "MATH-101(c)###Exercice14", text: "MATH-101(c): Analysis I, Task: Exercice 14" },
-        { id: "MATH-101(c)###Exercice15", text: "MATH-101(c): Analysis I, Task: Exercice 15" },
-        { id: "MATH-101(ol)###Exercice14", text: "MATH-101(ol): Analyse I (online), Task: Exercice 14" },
-        { id: "MATH-101(ol)###Exercice15", text: "MATH-101(ol): Analyse I (online), Task: Exercice 15" },
+        // {
+        //     id: "CS-431",
+        //     text: "CS-431: Introduction to natural language processing",
+        // },
+        // { id: "CS-433", text: "CS-433: Machine learning" },
+        // { id: "CS-502", text: "CS-502: Deep learning in biomedicine" },
+        { id: "MATH-101(c)---Exercice14", text: "MATH-101(c): Analysis I, Task: Exercice 14" },
+        { id: "MATH-101(c)---Exercice15", text: "MATH-101(c): Analysis I, Task: Exercice 15" },
+        { id: "MATH-101(ol)---Exercice14", text: "MATH-101(ol): Analyse I (online), Task: Exercice 14" },
+        { id: "MATH-101(ol)---Exercice15", text: "MATH-101(ol): Analyse I (online), Task: Exercice 15" },
     ];
 
     // Send results to server
@@ -117,7 +117,7 @@
         bind:value={upload_admin_key}
     />
     <div style="margin-top: 32px;">
-        <Button on:click={send_csv} icon={CloudUpload}>Update csv</Button>
+        <Button disabled={(upload_admin_key == "") || (courseID == null)} on:click={send_csv} icon={CloudUpload}>Update csv</Button>
     </div>
 {:else}
     <p>{server_msg}</p>

@@ -52,7 +52,7 @@
     $: task_required = courses_items.filter((c) => c.id === selected_courseID)[0].tasks !== undefined;
     $: tasks_items = courses_items.filter((c) => c.id === selected_courseID)[0].tasks?.map((t) => ({ id: t, text: t })).concat([{ id: null, text: " " }]);
     $: course_name = courses_items.filter((c) => c.id === selected_courseID)[0].text;
-    $: courseID = (task_required) ? selected_courseID + "###" + selected_taskID : selected_courseID;
+    $: courseID = (task_required) ? selected_courseID + "---" + selected_taskID : selected_courseID;
     $: task_valid = (selected_taskID && task_required) || !task_required;
     $: sciperID_range_invalid =
         sciperID.length != 6 ||
