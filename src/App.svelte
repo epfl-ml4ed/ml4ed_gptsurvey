@@ -196,7 +196,7 @@
 
   // In dev mode, pre-fill states with dummy data
   if (import.meta.env.MODE == "development") {
-    main_state = "PageWelcome";
+    //main_state = "PageAdmin";
     course_name = "DummyCourseName";
     task_name = "DummyTaskName";
     task_body =
