@@ -44,10 +44,10 @@
         // },
         // { id: "CS-433", text: "CS-433: Machine learning" },
         // { id: "CS-502", text: "CS-502: Deep learning in biomedicine" },
-        { id: "MATH-101(c)---Exercice14", text: "MATH-101(c): Analysis I, Task: Exercice 14" },
-        { id: "MATH-101(c)---Exercice15", text: "MATH-101(c): Analysis I, Task: Exercice 15" },
-        { id: "MATH-101(ol)---Exercice14", text: "MATH-101(ol): Analyse I (online), Task: Exercice 14" },
-        { id: "MATH-101(ol)---Exercice15", text: "MATH-101(ol): Analyse I (online), Task: Exercice 15" },
+        //{ id: "MATH-101(c)---Exercice14", text: "MATH-101(c): Analysis I, Task: Exercice 14" },
+        //{ id: "MATH-101(c)---Exercice15", text: "MATH-101(c): Analysis I, Task: Exercice 15" },
+        { id: "MATH-101---Exercice14", text: "MATH-101: Analyse I, Task: Exercice 14" },
+        { id: "MATH-101---Exercice15", text: "MATH-101: Analyse I, Task: Exercice 15" },
     ];
 
     // Send results to server

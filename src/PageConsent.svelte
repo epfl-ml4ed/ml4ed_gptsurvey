@@ -45,8 +45,7 @@
         // },
         // { id: "CS-433", text: "CS-433: Machine learning" },
         // { id: "CS-502", text: "CS-502: Deep learning in biomedicine" },
-        { id: "MATH-101(c)", text: "MATH-101(c): Analysis I", tasks: ["Exercice14", "Exercice15"] },
-        { id: "MATH-101(ol)", text: "MATH-101(ol): Analyse I (online)", tasks: ["Exercice14", "Exercice15"] },
+        { id: "MATH-101", text: "MATH-101: Analyse I", tasks: ["Exercice14", "Exercice15"] },
     ];
 
     $: task_required = courses_items.filter((c) => c.id === selected_courseID)[0].tasks !== undefined;
