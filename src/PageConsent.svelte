@@ -16,47 +16,36 @@
     let agree_and_over18 = false;
     let sciperID_range_invalid = true;
 
-    let courses_items = [
-        { id: null, text: " " },
-        {
-            id: "BIO-210",
-            text: "BIO-210: Applied software engineering for life sciences",
-        },
-        {
-            id: "CS-101",
-            text: "CS-101: Advanced information, computation, communication I",
-        },
-        {
-            id: "CS-119(d)",
-            text: "CS-119(d): Information, calcul, communication (Math)",
-        },
-        // {
-        //     id: "CS-119(g)",
-        //     text: "CS-119(g): Information, calcul, communication (SV)",
-        // },
-        {
-            id: "CS-119(h)",
-            text: "CS-119(h): Information, calcul, communication (GC)",
-        },
-        { id: "CS-401", text: "CS-401: Applied data analysis" },
-        // {
-        //     id: "CS-431",
-        //     text: "CS-431: Introduction to natural language processing",
-        // },
-        // { id: "CS-433", text: "CS-433: Machine learning" },
-        // { id: "CS-502", text: "CS-502: Deep learning in biomedicine" },
-        { id: "MATH-101", text: "MATH-101: Analyse I", tasks: ["Exercice14", "Exercice15"] },
-    ];
+    let courses_items = [{ id: null, text: " " }];
 
-    $: task_required = courses_items.filter((c) => c.id === selected_courseID)[0].tasks !== undefined;
-    $: tasks_items = courses_items.filter((c) => c.id === selected_courseID)[0].tasks?.map((t) => ({ id: t, text: t })).concat([{ id: null, text: " " }]);
-    $: course_name = courses_items.filter((c) => c.id === selected_courseID)[0].text;
-    $: courseID = (task_required) ? selected_courseID + "---" + selected_taskID : selected_courseID;
+    // Async request to get courses array
+    async function fetch_courses() {
+        const response = await fetch(
+            `${import.meta.env.VITE_BACKEND}list_courses`,
+        );
+        let courses = await response.json();
+        courses_items = [{ id: null, text: " " }].concat(courses);
+    }
+    fetch_courses();
+
+    $: task_required =
+        courses_items.filter((c) => c.id === selected_courseID)[0].tasks !==
+        undefined;
+    $: tasks_items = courses_items
+        .filter((c) => c.id === selected_courseID)[0]
+        .tasks?.map((t) => ({ id: t, text: t }))
+        .concat([{ id: null, text: " " }]);
+    $: course_name = courses_items.filter((c) => c.id === selected_courseID)[0]
+        .text;
+    $: courseID = task_required
+        ? selected_courseID + "---" + selected_taskID
+        : selected_courseID;
     $: task_valid = (selected_taskID && task_required) || !task_required;
     $: sciperID_range_invalid =
         sciperID.length != 6 ||
         ![...sciperID].every((c) => "0123456789".includes(c));
-    $: bottom_bar_next_enabled = agree_and_over18 && !sciperID_range_invalid && courseID && task_valid;
+    $: bottom_bar_next_enabled =
+        agree_and_over18 && !sciperID_range_invalid && courseID && task_valid;
 </script>
 
 <h1 id="title">{$_("pageconsent_title")}</h1>
@@ -97,7 +86,7 @@
 />
 
 {#if task_required}
-<br />
+    <br />
     <p>{$_("pageconsent_task")}</p>
     <br />
     <Dropdown
