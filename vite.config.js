@@ -6,6 +6,5 @@ import { optimizeImports, icons, optimizeCss } from "carbon-preprocess-svelte";
 export default defineConfig({
   plugins: [
     svelte({ preprocess: [optimizeImports(), icons(), optimizeCss()] })
-  ],
-  base: "/ml4ed_survey/"
+  ]
 })
