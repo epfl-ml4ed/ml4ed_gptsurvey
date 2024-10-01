@@ -103,7 +103,7 @@
       const response = await fetch(
         `${
           import.meta.env.VITE_BACKEND
-        }gather_data?sciperID=${sciperID}&courseID=${courseID}`
+        }gather_data?sciperID=${sciperID}&courseID=${courseID}`,
       );
       let resp_j = await response.json();
       if (!response.ok) {
@@ -158,7 +158,7 @@
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-        }
+        },
       );
       let resp_j = await response.json();
       if (!response.ok) {
@@ -194,7 +194,7 @@
     main_state = "PageAdmin";
   }
 
-  // In dev mode, pre-fill states with dummy data
+  // In dev mode, pre-fill states with dummy data to be able to jump to any page
   if (import.meta.env.MODE == "development") {
     //main_state = "PageAdmin";
     course_name = "DummyCourseName";
