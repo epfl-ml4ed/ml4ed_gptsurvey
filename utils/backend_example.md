@@ -1,5 +1,7 @@
 # Backend API
 
+**An example FastAPI backkend is available in `utils/backend_example.py`**
+
 ## Database
 
 You are free to store your data with your prefered system. Here we will represent the data as a simple dict, indexed by courseID -> studentID :
@@ -46,7 +48,10 @@ The frontend expects the following GET / POST methods to exist in the backend :
 def gather_data(sciperID: str, courseID: str) -> dict:
     """Returns all the data necessary for the survey."""
 
-    return courses_data[courseID][studentID]
+    # Raise 400 error if invalid arguments
+    # ...
+    # Then :
+    return courses_data[courseID][sciperID]
 ```
 
 ## write_results (POST)
@@ -59,6 +64,7 @@ def write_results(data: dict):
     courseID = data["CourseID"]
     sciperID = data["SciperID"]
     write_to_storage(f"result_{courseID}_{sciperID}.json", data)
+    return "ok (logs saved)"
 ```
 
 You are free to implement the `write_to_storage` to store it on your storage system (S3 bucket, DB, etc.)
@@ -70,7 +76,7 @@ You are free to implement the `write_to_storage` to store it on your storage sys
 def list_courses():
     """Returns courses description. `id` should correspond to a valid courseID in the database."""
 
-    courses_items = [
+    courses_description = [
         {
             "id": "BIO-210",
             "text": "BIO-210: Applied software engineering for life sciences",
@@ -81,5 +87,5 @@ def list_courses():
         },
         etc.
     ]
-    return courses_items
+    return courses_description
 ```
